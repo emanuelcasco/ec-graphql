@@ -1,8 +1,6 @@
-'use strict';
-
-const fs = require('fs'),
-  models = require('../app/models'),
-  path = require('path');
+const fs = require('fs');
+const models = require('../app/models');
+const path = require('path');
 
 const tables = Object.values(models.sequelize.models);
 

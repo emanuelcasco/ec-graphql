@@ -1,10 +1,10 @@
-const fs = require('fs'),
-  path = require('path'),
-  Sequelize = require('sequelize'),
-  basename = path.basename(__filename),
-  config = require('../../config'),
-  dbConfig = require('../../config/db')[config.environment],
-  db = {};
+const fs = require('fs');
+const path = require('path');
+const Sequelize = require('sequelize');
+const basename = path.basename(__filename);
+const config = require('../../config');
+const dbConfig = require('../../config/db')[config.environment];
+const db = {};
 
 const sequelize = new Sequelize(dbConfig.database, dbConfig.username, dbConfig.password, dbConfig);
 

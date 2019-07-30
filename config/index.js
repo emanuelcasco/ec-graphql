@@ -1,3 +1,5 @@
+const { assignObject } = require('../utils');
+
 const ENVIRONMENT = process.env.NODE_ENV || 'development';
 
 if (ENVIRONMENT !== 'production') {
@@ -5,25 +7,6 @@ if (ENVIRONMENT !== 'production') {
 }
 
 const configFile = `./${ENVIRONMENT}`;
-
-const isObject = variable => variable instanceof Object;
-
-/*
- * Deep copy of source object into tarjet object.
- * It does not overwrite properties.
- */
-const assignObject = (target, source) => {
-  if (target && isObject(target) && source && isObject(source)) {
-    Object.keys(source).forEach(key => {
-      if (!Object.prototype.hasOwnProperty.call(target, key) || target[key] === undefined) {
-        target[key] = source[key];
-      } else {
-        assignObject(target[key], source[key]);
-      }
-    });
-  }
-  return target;
-};
 
 const config = {
   common: {
