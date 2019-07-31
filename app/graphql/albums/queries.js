@@ -1,7 +1,10 @@
 const { gql } = require('apollo-server');
 const albumsService = require('../../services/albums');
 
-const parseAlbum = (album, photos) => ({ ...album, photos: photos.filter(p => p.albumId === album.id) });
+const parseAlbum = (album, photos) => {
+  const { userId: artist, ...data } = album;
+  return { ...data, artist, photos: photos.filter(p => p.albumId === album.id) };
+};
 
 module.exports = {
   queries: {
@@ -11,8 +14,8 @@ module.exports = {
 
       return parseAlbum(album, photos);
     },
-    getAllAlbums: async (_, { first, offset, sort }) => {
-      const albums = await albumsService.getAllAlbums(first, offset, sort);
+    getAllAlbums: async (_, { offset, limit, sort, filter }) => {
+      const albums = await albumsService.getAllAlbums(offset, limit, sort, filter);
       const photos = await albumsService.getAllPhotos();
 
       return albums.map(album => parseAlbum(album, photos));
@@ -21,7 +24,7 @@ module.exports = {
   schema: gql`
     extend type Query {
       getAlbum(id: ID!): Album!
-      getAllAlbums(first: Int, offset: Int, sort: SortingInput): [Album]
+      getAllAlbums(offset: Int, limit: Int, sort: SortingInput, filter: FilterInput): [Album]
     }
   `
 };

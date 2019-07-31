@@ -18,4 +18,9 @@ module.exports = gql`
     field: String!
     order: SortValue
   }
+
+  input FilterInput {
+    field: String!
+    value: String!
+  }
 `;

@@ -17,7 +17,7 @@ module.exports = gql`
   type Album {
     id: ID!
     title: String!
-    userId: Int!
+    artist: Int!
     photos: [Photo!]!
   }
 
