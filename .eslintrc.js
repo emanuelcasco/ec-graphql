@@ -5,7 +5,8 @@ const { assignObject } = require('./utils');
 const customConfig = {
   rules: {
     "curly": 0,
-    "global-require": 0
+    "global-require": 0,
+    "arrow-body-style": 0
   }
 };
 
