@@ -1,6 +1,7 @@
+const types = require('./types');
 const { queries, schema: queriesSchema } = require('./queries');
 
 module.exports = {
   queries,
-  schemas: [queriesSchema]
+  schemas: [types, queriesSchema]
 };
