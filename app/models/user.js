@@ -12,11 +12,13 @@ module.exports = (sequelize, DataTypes) => {
       },
       username: {
         type: DataTypes.STRING,
-        allowNull: false
+        allowNull: false,
+        unique: true
       },
       email: {
         type: DataTypes.STRING,
-        allowNull: false
+        allowNull: false,
+        unique: true
       },
       password: {
         type: DataTypes.STRING,
@@ -28,16 +30,6 @@ module.exports = (sequelize, DataTypes) => {
       underscored: true
     }
   );
-
-  User.createModel = user => User.create(user);
-
-  User.getOne = user => User.findOne({ where: user });
-
-  User.getAll = () => User.findAll();
-
-  User.getByUsername = username => User.getOne({ username });
-
-  User.prototype.updateModel = props => this.update(props);
 
   return User;
 };
