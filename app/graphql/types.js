@@ -14,6 +14,14 @@ module.exports = gql`
     id: ID!
   }
 
+  type UserResponse {
+    firstName: String!
+    lastName: String!
+    username: String!
+    email: String!
+    id: ID!
+  }
+
   type Album {
     id: ID!
     title: String!

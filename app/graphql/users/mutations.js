@@ -1,10 +1,27 @@
+const bcrypt = require('bcrypt');
 const { gql } = require('apollo-server');
-const { userLoggedIn } = require('../events');
+
+// const logger = require('../../logger');
+
 const { user: User } = require('../../models');
+const { userLoggedIn } = require('../events');
+
+const hashPassword = (plainPass, saltRounds) => {
+  return new Promise((resolve, reject) => {
+    bcrypt.hash(plainPass, saltRounds, (err, hash) => {
+      return err ? reject(err) : resolve(hash);
+    });
+  });
+};
 
 module.exports = {
   mutations: {
-    createUser: (_, { user }) => User.createModel(user),
+    signin: async (_, { user }) => {
+      const password = await hashPassword(user.password, 10);
+      const newUser = await User.create({ ...user, password });
+
+      return newUser.toJSON();
+    },
     login: (_, { credentials }) => {
       // IMPORTANT: Not a functional login, its just for illustrative purposes
       userLoggedIn.publish(credentials.username);
@@ -17,7 +34,7 @@ module.exports = {
   },
   schema: gql`
     extend type Mutation {
-      createUser(user: UserInput!): User!
+      signin(user: UserInput!): UserResponse!
       login(credentials: LoginInput!): AccessToken
     }
   `

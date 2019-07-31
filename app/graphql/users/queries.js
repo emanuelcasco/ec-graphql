@@ -8,8 +8,8 @@ module.exports = {
   },
   schema: gql`
     extend type Query {
-      user(id: ID, firstName: String, email: String): User!
-      users: [User]
+      user(id: ID, firstName: String, email: String): UserResponse!
+      users: [UserResponse]
     }
   `
 };
