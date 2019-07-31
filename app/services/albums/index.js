@@ -2,11 +2,15 @@ const api = require('./api');
 
 const logger = require('../../logger');
 
-exports.getAllAlbums = (first = 0, offset = 100) => {
+const constants = require('../const');
+const utils = require('../utils');
+
+exports.getAllAlbums = (first = 0, offset = 100, sort = null) => {
   return api
     .get('/albums')
     .then(res => res.data)
     .then(albums => albums.slice(first, first + offset))
+    .then(albums => (sort ? utils.sortBy(albums, sort.field, constants[sort.order]) : albums))
     .catch(err => {
       logger.error(err);
       throw new Error('Cannot retrieve albums from external API');

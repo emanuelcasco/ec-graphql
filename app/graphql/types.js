@@ -34,4 +34,9 @@ module.exports = gql`
     refreshToken: String!
     expiresIn: Int!
   }
+
+  enum SortValue {
+    ASC
+    DES
+  }
 `;

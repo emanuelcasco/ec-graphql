@@ -13,4 +13,9 @@ module.exports = gql`
     username: String!
     password: String!
   }
+
+  input SortingInput {
+    field: String!
+    order: SortValue
+  }
 `;
