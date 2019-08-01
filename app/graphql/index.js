@@ -1,27 +1,40 @@
+const fs = require('fs');
+
 const { makeExecutableSchema } = require('graphql-tools');
 
 const types = require('./types');
 const inputs = require('./inputs');
 
-const albums = require('./albums');
-const users = require('./users');
-const healthCheck = require('./healthCheck');
-
-const typeDefs = [types, inputs, ...albums.schemas, ...users.schemas, ...healthCheck.schemas];
-
-module.exports = makeExecutableSchema({
-  typeDefs,
+const base = {
+  typeDefs: [types, inputs],
   resolvers: {
-    Query: {
-      ...albums.queries,
-      ...users.queries,
-      ...healthCheck.queries
-    },
-    Mutation: {
-      ...users.mutations
-    },
-    Subscription: {
-      ...users.subscriptions
-    }
+    Query: {},
+    Mutation: {},
+    Subscription: {}
   }
-});
+};
+
+const getModels = source => {
+  return fs
+    .readdirSync(source, { withFileTypes: true })
+    .filter(dir => dir.isDirectory())
+    .map(dir => dir.name)
+    .map(dir => require(`./${dir}`));
+};
+
+const buildSchema = baseDirectory => {
+  const models = getModels(baseDirectory);
+
+  return models.reduce(({ typeDefs, resolvers }, model) => {
+    typeDefs.push(...model.schemas);
+    Object.assign(resolvers.Query, model.queries);
+    Object.assign(resolvers.Mutation, model.mutations);
+    Object.assign(resolvers.Subscription, model.subscriptions);
+
+    return base;
+  }, base);
+};
+
+const schema = buildSchema(__dirname);
+
+module.exports = makeExecutableSchema(schema);
