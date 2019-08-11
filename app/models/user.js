@@ -32,7 +32,6 @@ module.exports = (sequelize, DataTypes) => {
   );
 
   User.prototype.toJSON = function toJSON() {
-    // eslint-disable-next-line no-unused-vars
     const user = this.dataValues;
     delete user.password;
     return user;

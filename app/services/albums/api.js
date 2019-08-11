@@ -1,6 +1,6 @@
 const axios = require('axios');
 
-const logger = require('../../logger');
+const logger = require('../../libs/logger');
 
 const requestData = config =>
   JSON.stringify({ method: config.method, baseURL: config.baseURL, url: config.url });

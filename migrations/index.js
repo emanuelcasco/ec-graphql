@@ -1,7 +1,7 @@
 const Umzug = require('umzug');
 const config = require('./../config/');
 const { sequelize } = require('../app/models');
-const logger = require('../app/logger');
+const logger = require('../app/libs/logger');
 
 exports.check = () => {
   const umzug = new Umzug({

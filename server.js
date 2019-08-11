@@ -1,7 +1,7 @@
 const { ApolloServer } = require('apollo-server');
 const config = require('./config');
 const migrationsManager = require('./migrations');
-const logger = require('./app/logger');
+const logger = require('./app/libs/logger');
 const schema = require('./app/graphql');
 
 const port = config.common.api.port || 8080;

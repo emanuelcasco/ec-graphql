@@ -3,7 +3,7 @@ const { gql } = require('apollo-server');
 module.exports = gql`
   input SortingInput {
     field: String!
-    order: SortValue
+    order: SortValue = ASC
   }
 
   input FilterInput {

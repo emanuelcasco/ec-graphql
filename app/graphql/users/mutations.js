@@ -1,8 +1,6 @@
 const bcrypt = require('bcryptjs');
 const { gql } = require('apollo-server');
 
-// const logger = require('../../logger');
-
 const { user: User } = require('../../models');
 const { userLoggedIn } = require('../events');
 

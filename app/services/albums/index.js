@@ -1,16 +1,15 @@
 const api = require('./api');
 
-const logger = require('../../logger');
-
-const constants = require('../const');
-const utils = require('../utils');
+const logger = require('../../libs/logger');
+const constants = require('../../constants');
+const utils = require('../../utils');
 
 exports.getAllAlbums = (offset = 0, limit = 100, sort, filter) => {
   return api
     .get('/albums')
     .then(res => res.data)
-    .then(albums => (sort ? utils.sortBy(albums, sort.field, constants[sort.order]) : albums))
     .then(albums => (filter ? utils.filterBy(albums, filter.field, filter.value) : albums))
+    .then(albums => (sort ? utils.sortBy(albums, sort.field, constants[sort.order]) : albums))
     .then(albums => albums.slice(offset, offset + limit))
     .catch(err => {
       logger.error(err);
