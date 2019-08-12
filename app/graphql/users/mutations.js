@@ -21,7 +21,6 @@ module.exports = {
       return newUser.toJSON();
     },
     login: (_, { credentials }) => {
-      // IMPORTANT: Not a functional login, its just for illustrative purposes
       userLoggedIn.publish(credentials.username);
       return {
         accessToken: 'example_token',

@@ -32,6 +32,7 @@ const buildSchema = baseDirectory => {
     Object.assign(resolvers.Query, model.queries);
     Object.assign(resolvers.Mutation, model.mutations);
     Object.assign(resolvers.Subscription, model.subscriptions);
+    Object.assign(resolvers, model.typeResolvers);
 
     return base;
   }, base);

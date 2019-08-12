@@ -4,7 +4,9 @@ const logger = require('../../libs/logger');
 const constants = require('../../constants');
 const utils = require('../../utils');
 
-exports.getAllAlbums = (offset = 0, limit = 100, sort, filter) => {
+const { DEFAULT_LIMIT, DEFAULT_OFFSET } = constants;
+
+exports.getAllAlbums = (offset = DEFAULT_OFFSET, limit = DEFAULT_LIMIT, sort, filter) => {
   return api
     .get('/albums')
     .then(res => res.data)

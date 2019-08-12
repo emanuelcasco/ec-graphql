@@ -1,4 +1,4 @@
-exports.formatAlbum = (album, photos) => {
+exports.formatAlbum = album => {
   const { userId: artist, ...data } = album;
-  return { ...data, artist, photos };
+  return { ...data, artist };
 };

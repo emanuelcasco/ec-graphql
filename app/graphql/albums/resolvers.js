@@ -2,18 +2,26 @@ const albumsService = require('../../services/albums');
 const logger = require('../../libs/logger');
 const { formatAlbum } = require('./utils');
 
-exports.getAlbum = async (root, { id: albumId }) => {
-  logger.info(`Fetching album with id: ${albumId}`);
-  const album = await albumsService.getAlbumById(albumId);
-  const albumPhotos = await albumsService.getPhotosByAlbumId(albumId);
-  return formatAlbum(album, albumPhotos);
+exports.getAlbum = (root, { id }) => {
+  logger.info(`Fetching album with id: ${id}`);
+  return albumsService.getAlbumById(id).then(formatAlbum);
 };
 
-exports.getAllAlbums = async (root, { offset, limit, sort, filter }) => {
+exports.getAlbums = (root, { offset, limit, sort, filter }) => {
   logger.info(`Fetching albums list. Params: ${JSON.stringify({ offset, limit, sort, filter })}`);
-  const albums = await albumsService.getAllAlbums(offset, limit, sort, filter);
-  const photos = await albumsService.getAllPhotos();
-  return albums.map(album => {
-    return formatAlbum(album, photos.filter(p => p.albumId === album.id));
-  });
+  return albumsService.getAllAlbums(offset, limit, sort, filter).then(albums => albums.map(formatAlbum));
+};
+
+exports.getPhotos = (root, { id }) => {
+  logger.info(`Fetching photos of album with id: ${id}`);
+  return albumsService.getPhotosByAlbumId(id);
+};
+
+exports.typeResolvers = {
+  Album: {
+    photos: album => {
+      logger.info(`Fetching photos of album with id: ${album.id}`);
+      return albumsService.getPhotosByAlbumId(album.id);
+    }
+  }
 };

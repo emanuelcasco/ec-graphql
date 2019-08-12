@@ -1,4 +1,3 @@
-/* eslint-disable class-methods-use-this */
 const { gql } = require('apollo-server');
 const ConstraintDirective = require('graphql-constraint-directive');
 
