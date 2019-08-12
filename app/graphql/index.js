@@ -4,14 +4,16 @@ const { makeExecutableSchema } = require('graphql-tools');
 
 const types = require('./types');
 const inputs = require('./inputs');
+const { directives, schemaDirectives } = require('./directives');
 
 const base = {
-  typeDefs: [types, inputs],
+  typeDefs: [directives, types, inputs],
   resolvers: {
     Query: {},
     Mutation: {},
     Subscription: {}
-  }
+  },
+  schemaDirectives
 };
 
 const getModels = source => {
